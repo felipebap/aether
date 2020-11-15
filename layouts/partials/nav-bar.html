@@ -1,29 +1,45 @@
-<nav class="nav-bar side-padding">
-  <h1 class="nav-header"><a href="{{ .Site.BaseURL }}" class="nav-text">
-    {{- if isset $.Site.Params "brand"}}
-      {{- $.Site.Params.brand -}}
-    {{ else }}
-      {{- $.Site.Title -}}
-    {{ end -}}
-  </a></h1>
-  <div class="hamburger-menu">
-    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
-      <span></span>
-      <span></span>
-    </button>
-    <ul id="menu" class="hamburger-menu-overlay">
-      <li><a href="{{ .Site.BaseURL }}" class="hamburger-menu-overlay-link">Home</a></li>
-      {{ range where .Site.Pages "Params.displayinmenu" true -}}
-        <li><a href="{{ .Permalink }}" class="hamburger-menu-overlay-link">{{ .Title }}</a></li>
-      {{ end -}}
-      {{ range $key, $value := .Site.Taxonomies.categories -}}
-      {{ with $.Site.GetPage (printf "%s%s" "categories/" ($key | urlize)) }}
-      <li><a href="{{ .Permalink }}" class="hamburger-menu-overlay-link">{{ .Title }}</a></li>
-      {{ end }}
-      {{- end }}
-      {{ if eq .Site.Params.rssinmenu true -}}
-      <li><a href="{{ "/index.xml" | absURL }}" class="hamburger-menu-overlay-link">rss</a></li>
-      {{- end }}
-    </ul>
+
+<header class="header">
+  <div class="top-header">
+      <div class="container-xl">
+          <div class="row">
+              <div class="col-12">
+                  <nav class="main-nav">
+                    <ul class="menu-language list-inline float-right">
+                       
+                        {{ range $.Site.Home.AllTranslations }}
+                        <li class="list-inline-item"><a href="{{ .Permalink }}">{{ .Language.LanguageName }}</a></li>
+                        {{ end }}
+                    </ul>
+                  </nav>
+              </div>
+          </div>
+      </div>
   </div>
-</nav>
+
+  <div class="bottom-header">
+      <div class="container-xl">
+          <div class="row">
+              <div class="col-12">
+                      <a href="{{ .Permalink }}"><span class="fortu-brand">fortú</span></a>
+                  <section class="d-none d-sm-block float-right join_waiting_list">
+                  <button type="button" class="btn btn-primary btn-join_waiting_list" id="btnJoinWaitingList">{{ i18n "joinWaitingList" }}</button>
+                  <form class="form-inline d-none" id="JoinWaitingList__form">
+                      <div class="form-group mx-sm-3 mb-2">
+                          <label for="btnJoinWaitingList__email" class="sr-only">E-mail</label>
+                          <input type="email" class="form-control" id="JoinWaitingList__email" placeholder="E-mail">
+                      </div>
+                      <button type="button" class="btn btn-primary d-none d-sm-block float-right btn-join_waiting_list__submit" id="btnJoinWaitingList__submit">{{ i18n "sendInvitation" }}</button> 
+                      <span id="JoinWaitingList__status">
+                        {{ i18n "invitatonSent" }}
+                          <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="18" height="13" viewBox="0 0 18 13" fill="none">
+                              <path d="m17.7 0.3c0.4 0.4 0.4 1 0 1.4l-11 11c-0.4 0.4-1 0.4-1.4 0l-5-5c-0.4-0.4-0.4-1 0-1.4 0.4-0.4 1-0.4 1.4 0l4.3 4.3 10.3-10.3c0.4-0.4 1-0.4 1.4 0z" fill="#87BE61"/><defs>
+                          </svg>
+                      </span>
+                  </form>
+                  </section>
+              </div>
+          </div>
+      </div>
+  </div>
+</header>
